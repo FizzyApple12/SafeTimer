@@ -103,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
                                 lapsAdapter.add("Lap " + (i + 1) + ": " + durationToString(timeTable.laps.get(i - 1), timeTable.laps.get(i)));
                             }
                         }
-                        lapsAdapter.add("Recording: Lap " + timeTable.laps.size() + ": " + durationToString(timeTable.laps.get(timeTable.laps.size() - 1), new Date()));
+                        lapsAdapter.add("Recording: Lap " + (timeTable.laps.size() + 1) + ": " + durationToString(timeTable.laps.get(timeTable.laps.size() - 1), new Date()));
                         updateLaps = false;
                     }
 
                     if (timeTable.laps.size() > 0) {
                         lapsAdapter.remove(lapsAdapter.getItem(lapsAdapter.getCount() - 1));
-                        lapsAdapter.add("Recording: Lap " + timeTable.laps.size() + ": " + durationToString(timeTable.laps.get(timeTable.laps.size() - 1), new Date()));
+                        lapsAdapter.add("Recording: Lap " + (timeTable.laps.size() + 1) + ": " + durationToString(timeTable.laps.get(timeTable.laps.size() - 1), new Date()));
                     }
 
                     if (timeTable.end != null) {
