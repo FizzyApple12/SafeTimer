@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<String> lapsList = new ArrayList<String>();
 
+    public boolean updateLaps = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
         final Button lapButton = findViewById(R.id.lap);
         lapButton.setOnClickListener(v -> {
-            if (timeTable != null && timeTable.end == null) timeTable.lap();
+            if (timeTable != null && timeTable.end == null) {
+                timeTable.lap();
+                updateLaps = true;
+            }
             System.out.println(timeTable.laps);
         });
 
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    if(timeTable.laps.size() > 0) {
+                    if (updateLaps) {
                         lapsAdapter.clear();
                         lapsAdapter.add("Lap 1: " + durationToString(timeTable.start, timeTable.laps.get(0)));
                         if (timeTable.laps.size() > 1) {
@@ -98,6 +103,13 @@ public class MainActivity extends AppCompatActivity {
                                 lapsAdapter.add("Lap " + (i + 1) + ": " + durationToString(timeTable.laps.get(i - 1), timeTable.laps.get(i)));
                             }
                         }
+                        lapsAdapter.add("Recording: Lap " + timeTable.laps.size() + ": " + durationToString(timeTable.laps.get(timeTable.laps.size() - 1), new Date()));
+                        updateLaps = false;
+                    }
+
+                    if (timeTable.laps.size() > 0) {
+                        lapsAdapter.remove(lapsAdapter.getItem(lapsAdapter.getCount() - 1));
+                        lapsAdapter.add("Recording: Lap " + timeTable.laps.size() + ": " + durationToString(timeTable.laps.get(timeTable.laps.size() - 1), new Date()));
                     }
 
                     if (timeTable.end != null) {
